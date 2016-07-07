@@ -3,18 +3,20 @@
 """
 " GTK
 """
-import                          gi
+import gi
 gi.require_version('Gtk', '3.0')
-from    gi.repository   import  Gtk
+from gi.repository import  Gtk
 
 """
 " EpiCard
 """
-from    win             import  *
-import                          views
+from win import  *
+import views
+from net.intra import IntraRetriever
 
 if __name__ == '__main__':
+    intra = IntraRetriever()
     window = EpiCardWin()
 
-    views.make(window)
+    views.make(window, intra)
     Gtk.main()

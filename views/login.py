@@ -4,15 +4,23 @@
 """
 from    gi.repository   import  Gtk
 
-def login(win):
+"""
+" EpiCard
+"""
+from net.intra import IntraRetriever
+
+def login(win, intra):
     win.set_title(win.BASE_TITLE + " - Connexion")
-    __populate_login(win)
+    __populate_login(win, intra)
     win.show_all()
 
-def __submit_login(field, login, passwd, autologin):
+
+def __submit_login(field, login, passwd, intra):
+    intra.connect(login.get_text(), passwd.get_text(), '/')
     pass
 
-def __populate_login(win):
+
+def __populate_login(win, intra):
     contain_grid = Gtk.Grid()
     contain_grid.set_row_spacing(10)
     contain_grid.set_column_spacing(10)
@@ -40,32 +48,15 @@ def __populate_login(win):
     contain_grid.attach(passwd_label, 0, 1, 1, 1)
     contain_grid.attach(passwd_field, 1, 1, 2, 1)
 
-    or_label = Gtk.Label("Ou")
-    contain_grid.attach(or_label, 0, 2, 3, 1)
-
-    """
-        Autologin link input
-    """
-    autologin_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
-    autologin_label = Gtk.Label("Lien autologin", xalign=0)
-    autologin_field = Gtk.Entry()
-    autologin_field.set_text("http://intra.epitech.eu/logi_n-autologin")
-    contain_grid.attach(autologin_label, 0, 3, 1, 1)
-    contain_grid.attach(autologin_field, 1, 3, 2, 1)
-
     """
         Submit - Callbacks
     """
     submit_button = Gtk.Button("Connexion")
     submit_button.connect("clicked", __submit_login,
-                        login_field, passwd_field, autologin_field)
-    contain_grid.attach(submit_button, 0, 4, 3, 1)
-    login_field.connect("activate", __submit_login,
-                        login_field, passwd_field, autologin_field)
+                        login_field, passwd_field, intra)
+    contain_grid.attach(submit_button, 0, 2, 3, 1)
     passwd_field.connect("activate", __submit_login,
-                         login_field, passwd_field, autologin_field)
-    autologin_field.connect("activate", __submit_login,
-                            login_field, passwd_field, autologin_field)
+                        login_field, passwd_field, intra)
 
     """
         Packing
