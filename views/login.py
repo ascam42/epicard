@@ -20,7 +20,7 @@ def __populate_login(win):
     """
         Login input
     """
-    login_label = Gtk.Label("Login intranet")
+    login_label = Gtk.Label("Login intranet", xalign=0)
     login_field = Gtk.Entry()
     login_field.set_text("logi_n")
     login_field.props.caps_lock_warning = True
@@ -31,7 +31,8 @@ def __populate_login(win):
         Password input
     """
     passwd_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
-    passwd_label = Gtk.Label("Pass UNIX")
+    passwd_label = Gtk.Label("Pass UNIX", xalign=0)
+    passwd_label.set_justify(Gtk.Justification.LEFT)
     passwd_field = Gtk.Entry()
     passwd_field.set_text("password")
     passwd_field.props.caps_lock_warning = True
@@ -46,7 +47,7 @@ def __populate_login(win):
         Autologin link input
     """
     autologin_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
-    autologin_label = Gtk.Label("Lien autologin")
+    autologin_label = Gtk.Label("Lien autologin", xalign=0)
     autologin_field = Gtk.Entry()
     autologin_field.set_text("http://intra.epitech.eu/logi_n-autologin")
     contain_grid.attach(autologin_label, 0, 3, 1, 1)
