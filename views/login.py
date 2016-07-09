@@ -15,9 +15,15 @@ def login(win, intra):
     win.show_all()
 
 
-def __submit_login(field, login, passwd, intra):
-    intra.connect(login.get_text(), passwd.get_text(), '/')
-    pass
+def __submit_login(field, win, login, passwd, intra):
+    win.clear()
+    win.show_all()
+    intra.auth(login.get_text(), passwd.get_text())
+    if intra.ping('/user/') is True:
+        print('owi')
+    else:
+        print('oignon')
+    # pass
 
 
 def __populate_login(win, intra):
@@ -53,13 +59,14 @@ def __populate_login(win, intra):
     """
     submit_button = Gtk.Button("Connexion")
     submit_button.connect("clicked", __submit_login,
-                        login_field, passwd_field, intra)
+                        win, login_field, passwd_field, intra)
     contain_grid.attach(submit_button, 0, 2, 3, 1)
     passwd_field.connect("activate", __submit_login,
-                        login_field, passwd_field, intra)
+                        win, login_field, passwd_field, intra)
 
     """
         Packing
     """
     win.add(contain_grid)
+    return (contain_grid)
 
