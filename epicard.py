@@ -31,8 +31,11 @@ if __name__ == '__main__':
     # window = EpiCardWin()
     # processes = []
 
-    views.make(local)
-    Gtk.main()
+    try:
+        views.make(local)
+        Gtk.main()
+    except TypeError as err:
+        print(err.__traceback__ + err.__cause__)
 
     # not anymore if in TreadPool (so greatm handling itself, much love)
     # for proc in local.processes:
