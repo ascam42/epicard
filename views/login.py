@@ -3,6 +3,7 @@
 " GTK
 """
 from    gi.repository   import  Gtk
+from    gi.repository   import  GLib
 
 """
 " Threading
@@ -27,17 +28,19 @@ def __submit_login(field, login, passwd, local):
     local.window.add(connecting_label)
     local.window.show_all()
 
-    # on thread it !!
-    connect_thread = Thread(target=local.intra.ping,
-                            args=('/user/', login.get_text(), passwd.get_text()))
+    connect_thread = local.pool.apply_async(local.intra.ping,
+                                            ('/user/', login.get_text(), passwd.get_text()))
     local.processes.append(connect_thread)
-    connect_thread.start()
-    #
-    # TODO
-    # Any pythonic way to raise an event ON THREAD JOIN ??? 
-    # YA KNO, LIKE TO HANDLE EXIT !
-    # + how to retieve return data ?
-    # or does it needs to be in local data ?
+
+    GLib.timeout_add(100, __check_ping_done, (local))
+
+
+def __check_ping_done(local):
+    if not local.processes[0].ready():
+        print('Connecting...')
+        GLib.timeout_add(100, __check_ping_done, (local))
+    else:
+        print('DONE')
 
 
 def __populate_login(win, threading_local):

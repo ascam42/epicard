@@ -8,21 +8,32 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import  Gtk
 
 """
+" Threading
+"""
+import threading
+from threading import Thread
+from multiprocessing.pool import ThreadPool
+
+"""
 " EpiCard
 """
 from win import  *
-import threading
 import views
 from net.intra import IntraRetriever
 
 if __name__ == '__main__':
     local = threading.local()
+    local.pool = ThreadPool()
     local.intra = IntraRetriever()
     local.window = EpiCardWin()
     local.processes = []
+    # intra = IntraRetriever()
+    # window = EpiCardWin()
+    # processes = []
 
     views.make(local)
     Gtk.main()
 
-    for proc in local.processes:
-        proc.join()
+    # not anymore if in TreadPool (so greatm handling itself, much love)
+    # for proc in local.processes:
+        # proc.join()
