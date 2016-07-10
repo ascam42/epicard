@@ -16,7 +16,7 @@ class EpiCardWin(Gtk.Window):
         Gtk.Window.__init__(self, title=self.BASE_TITLE)
 
         self.set_border_width(20)
-        self.set_position(Gtk.WindowPosition.CENTER)
+        self.center()
 
         self.connect("delete-event", Gtk.main_quit)
 
@@ -27,3 +27,17 @@ class EpiCardWin(Gtk.Window):
 
     def clear(self):
         self.forall(self.remove)
+
+
+    def center(self):
+        self.set_position(Gtk.WindowPosition.CENTER)
+
+
+    def reset(self):
+        self.clear()
+        self.center()
+
+
+    def display(self):
+        self.center()
+        self.show_all()
