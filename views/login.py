@@ -10,6 +10,8 @@ from    gi.repository   import  GLib
 """
 from net.intra import IntraRetriever
 
+
+
 def login(win, threading_local, addit=None):
     win.clear()
     win.set_title(win.BASE_TITLE + " - Connexion")
@@ -46,7 +48,7 @@ def __check_ping_done(local):
             print('fail')
             print(result)
             login(local.window, local, addit="Erreur de connexion" +
-                    (": " + result if result != False else " zouf"))
+                    (": " + result if result != False))
         return False
     return True
 
